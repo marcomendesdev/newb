@@ -1,8 +1,18 @@
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu"
-import { JSX, SVGProps } from "react"
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
+import { JSX, SVGProps } from "react";
+import { ModeToggle } from "./mode-toggle";
 
 export default function Header() {
   return (
@@ -10,30 +20,52 @@ export default function Header() {
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden">
+            <Button variant="outline" size="icon" className="lg:hidden px-3">
               <MenuIcon className="h-6 w-6" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
+          <SheetTrigger className="w-full" asChild>
+            <ShirtIcon className="h-6 w-6 lg:hidden" />
+          </SheetTrigger>
           <SheetContent side="left">
             <Link href="#" prefetch={false}>
-              <ShirtIcon className="h-6 w-6" />
-              <span className="sr-only">ShadCN</span>
+              <SheetTitle>Menu</SheetTitle>
             </Link>
             <div className="grid gap-2 py-6">
-              <Link href="#" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+              <Link
+                href="#"
+                className="flex w-full items-center py-2 text-lg font-semibold"
+                prefetch={false}
+              >
                 Home
               </Link>
-              <Link href="#" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+              <Link
+                href="#"
+                className="flex w-full items-center py-2 text-lg font-semibold"
+                prefetch={false}
+              >
                 About
               </Link>
-              <Link href="#" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+              <Link
+                href="#"
+                className="flex w-full items-center py-2 text-lg font-semibold"
+                prefetch={false}
+              >
                 Services
               </Link>
-              <Link href="#" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+              <Link
+                href="#"
+                className="flex w-full items-center py-2 text-lg font-semibold"
+                prefetch={false}
+              >
                 Portfolio
               </Link>
-              <Link href="#" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
+              <Link
+                href="#"
+                className="flex w-full items-center py-2 text-lg font-semibold"
+                prefetch={false}
+              >
                 Contact
               </Link>
             </div>
@@ -92,13 +124,16 @@ export default function Header() {
             </NavigationMenuLink>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="ml-auto flex gap-2">
+        <div className="ml-auto lg:flex gap-2 hidden">
           <Button variant="outline">Sign in</Button>
           <Button>Sign Up</Button>
         </div>
+        <div className="ml-auto lg:ml-4 gap-2">
+            <ModeToggle />
+        </div>
       </header>
     </div>
-  )
+  );
 }
 
 function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -119,9 +154,8 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
       <line x1="4" x2="20" y1="6" y2="6" />
       <line x1="4" x2="20" y1="18" y2="18" />
     </svg>
-  )
+  );
 }
-
 
 function ShirtIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
@@ -139,5 +173,5 @@ function ShirtIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
     >
       <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
     </svg>
-  )
+  );
 }
