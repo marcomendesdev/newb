@@ -68,6 +68,10 @@ export default function Header() {
               >
                 Contact
               </Link>
+              <div className="flex w-full items-center py-2 gap-4 text-lg font-semibold lg:hidden">
+                <Button variant="outline" className="w-full">Sign in</Button>
+                <Button className="w-full">Sign Up</Button>
+              </div>
             </div>
           </SheetContent>
         </Sheet>
@@ -129,7 +133,7 @@ export default function Header() {
           <Button>Sign Up</Button>
         </div>
         <div className="ml-auto lg:ml-4 gap-2">
-            <ModeToggle />
+          <ModeToggle />
         </div>
       </header>
     </div>

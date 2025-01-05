@@ -1,11 +1,11 @@
 "use client";
-
+ 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+ 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -25,42 +25,42 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
-
+ 
 const FormSchema = z.object({
   time: z.date({
     required_error: "A date and time is required.",
   }),
 });
-
+ 
 export function DateTimePicker24hForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
+ 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast.success(`Selected date and time: ${format(data.time, "PPPP HH:mm")}`);
   }
-
+ 
   function handleDateSelect(date: Date | undefined) {
     if (date) {
       form.setValue("time", date);
     }
   }
-
+ 
   function handleTimeChange(type: "hour" | "minute", value: string) {
     const currentDate = form.getValues("time") || new Date();
     const newDate = new Date(currentDate);
-
+ 
     if (type === "hour") {
       const hour = parseInt(value, 10);
       newDate.setHours(hour);
     } else if (type === "minute") {
       newDate.setMinutes(parseInt(value, 10));
     }
-
+ 
     form.setValue("time", newDate);
   }
-
+ 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -107,8 +107,7 @@ export function DateTimePicker24hForm() {
                                 key={hour}
                                 size="icon"
                                 variant={
-                                  field.value &&
-                                  field.value.getHours() === hour
+                                  field.value && field.value.getHours() === hour
                                     ? "default"
                                     : "ghost"
                                 }
@@ -121,7 +120,10 @@ export function DateTimePicker24hForm() {
                               </Button>
                             ))}
                         </div>
-                        <ScrollBar orientation="horizontal" className="sm:hidden" />
+                        <ScrollBar
+                          orientation="horizontal"
+                          className="sm:hidden"
+                        />
                       </ScrollArea>
                       <ScrollArea className="w-64 sm:w-auto">
                         <div className="flex sm:flex-col p-2">
@@ -141,12 +143,15 @@ export function DateTimePicker24hForm() {
                                   handleTimeChange("minute", minute.toString())
                                 }
                               >
-                                {minute.toString().padStart(2, '0')}
+                                {minute.toString().padStart(2, "0")}
                               </Button>
                             )
                           )}
                         </div>
-                        <ScrollBar orientation="horizontal" className="sm:hidden" />
+                        <ScrollBar
+                          orientation="horizontal"
+                          className="sm:hidden"
+                        />
                       </ScrollArea>
                     </div>
                   </div>
