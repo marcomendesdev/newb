@@ -12,7 +12,7 @@ export default function TablesList() {
           {bookings &&
             bookings.map((booking) => (
               <div key={booking.id}>
-                <h1>{booking.id}</h1>
+                <h1>{booking.capacity}</h1>
               </div>
             ))}
         </>

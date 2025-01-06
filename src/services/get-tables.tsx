@@ -1,9 +1,20 @@
 "use server";
 
-export default async function getTables() {
-  const response = await fetch("https://67631d5e17ec5852cae823fa.mockapi.io/api/tables/restaurant-tables");
-  const data = await response.json();
-  console.log("Data:", data);
+import { Pool } from 'pg';
 
-  return data;
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
+export default async function getTables() {
+  const client = await pool.connect();
+  try {
+    const { rows } = await client.query('SELECT * FROM "restaurant-tables".tables');
+    return rows;
+  } finally {
+    client.release();
+  }
 }

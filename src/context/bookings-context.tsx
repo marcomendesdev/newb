@@ -4,10 +4,10 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import getTables from "@/services/get-tables";
 
 interface TableType {
-  userId: number;
+  
   id: number;
-  title: string;
-  completed: boolean;
+  name: string;
+  capacity: number;
   // Add other fields as necessary
 }
 
