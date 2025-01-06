@@ -2,6 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import getTables from "@/services/get-tables";
+import getBookings from "@/services/get-bookings";
+
 
 interface TableType {
   
@@ -30,6 +32,9 @@ export function BookingsProvider({ children }: BookingsProviderProps) {
   useEffect(() => {
     async function fetchBookings() {
       const data = await getTables();
+      const bookings = await getBookings();
+      console.log("bookings", bookings);
+      
       console.log("Fetched bookings:", data); // Add this line for debugging
       setBookings(data);
     }
