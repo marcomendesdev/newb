@@ -1,21 +1,15 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import getTables from "@/services/get-tables";
-import getBookings from "@/services/get-bookings";
-
+import React, { createContext, useContext } from "react";
 
 interface TableType {
-  
   id: number;
   name: string;
   capacity: number;
-  // Add other fields as necessary
 }
 
 interface BookingsContextType {
   bookings: TableType[] | null;
-  setBookings: React.Dispatch<React.SetStateAction<TableType[] | null>>;
 }
 
 const BookingsContext = createContext<BookingsContextType | undefined>(
@@ -24,25 +18,12 @@ const BookingsContext = createContext<BookingsContextType | undefined>(
 
 interface BookingsProviderProps {
   children: React.ReactNode;
+  initialBookings: TableType[];
 }
 
-export function BookingsProvider({ children }: BookingsProviderProps) {
-  const [bookings, setBookings] = useState<TableType[] | null>(null);
-
-  useEffect(() => {
-    async function fetchBookings() {
-      const data = await getTables();
-      const bookings = await getBookings();
-      console.log("bookings", bookings);
-      
-      console.log("Fetched bookings:", data); // Add this line for debugging
-      setBookings(data);
-    }
-    fetchBookings();
-  }, []);
-
+export function BookingsProvider({ children, initialBookings }: BookingsProviderProps) {
   return (
-    <BookingsContext.Provider value={{ bookings, setBookings }}>
+    <BookingsContext.Provider value={{ bookings: initialBookings }}>
       {children}
     </BookingsContext.Provider>
   );

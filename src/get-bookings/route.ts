@@ -14,6 +14,9 @@ export default async function getBookings() {
   try {
     const { rows } = await client.query('SELECT * FROM "restaurant-tables".bookings');
     return rows;
+  } catch (error) {
+    console.error('Error executing query', error);
+    throw new Error('Failed to fetch bookings');
   } finally {
     client.release();
   }
