@@ -1,23 +1,11 @@
-"use server";
+import { fetchBookings } from "@/lib/db";
+import { NextResponse } from "next/server";
 
-import { Pool } from 'pg';
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
-export default async function getBookings() {
-  const client = await pool.connect();
+export async function GET() {
   try {
-    const { rows } = await client.query('SELECT * FROM "restaurant-tables".bookings');
-    return rows;
+    const bookings = await fetchBookings();
+    return NextResponse.json({ success: true, bookings });
   } catch (error) {
-    console.error('Error executing query', error);
-    throw new Error('Failed to fetch bookings');
-  } finally {
-    client.release();
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

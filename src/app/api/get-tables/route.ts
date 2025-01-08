@@ -1,20 +1,12 @@
-"use server";
+import { fetchTables } from "@/lib/db";
+import { NextResponse } from "next/server";
 
-import { Pool } from 'pg';
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
-export default async function getTables() {
-  const client = await pool.connect();
+export async function GET() {
   try {
-    const { rows } = await client.query('SELECT * FROM "restaurant-tables".tables');
-    return rows;
-  } finally {
-    client.release();
+    const tables = await fetchTables();
+    return NextResponse.json({ success: true, tables });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
 }
