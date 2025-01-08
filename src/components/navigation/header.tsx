@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { JSX, SVGProps } from "react";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
@@ -54,13 +55,15 @@ export default function Header() {
               >
                 Tables
               </Link>
-              <Link
-                href="/my-bookings"
-                className="flex w-full items-center py-2 text-lg font-semibold"
-                prefetch={false}
-              >
-                My Bookings
-              </Link>
+              <SignedIn>
+                <Link
+                  href="/my-bookings"
+                  className="flex w-full items-center py-2 text-lg font-semibold"
+                  prefetch={false}
+                >
+                  My Bookings
+                </Link>
+              </SignedIn>
               <Link
                 href="/contact"
                 className="flex w-full items-center py-2 text-lg font-semibold"
@@ -69,9 +72,12 @@ export default function Header() {
                 Contact
               </Link>
               <div className="flex w-full items-center py-2 gap-4 text-lg font-semibold lg:hidden">
-                <Button variant="outline" className="w-full">
-                  Sign in
-                </Button>
+                <SignedOut>
+                  <SignInButton mode="modal">Sign In</SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
                 <Link href={"/book-table"} prefetch={false}>
                   <Button className="w-full">Book a table</Button>
                 </Link>
@@ -112,15 +118,17 @@ export default function Header() {
                 Tables
               </Link>
             </NavigationMenuLink>
-            <NavigationMenuLink asChild>
-              <Link
-                href="/my-bookings"
-                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                prefetch={false}
-              >
-                My Bookings
-              </Link>
-            </NavigationMenuLink>
+            <SignedIn>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/my-bookings"
+                  className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                  prefetch={false}
+                >
+                  My Bookings
+                </Link>
+              </NavigationMenuLink>
+            </SignedIn>
             <NavigationMenuLink asChild>
               <Link
                 href="/contact"
@@ -136,7 +144,12 @@ export default function Header() {
           <Link href={"/book-table"} prefetch={false}>
             <Button>Book a table</Button>
           </Link>
-          <Button variant="outline">Sign In</Button>
+          <SignedOut>
+            <SignInButton mode="modal">Sign In</SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
         <div className="ml-auto lg:ml-4 gap-2">
           <ModeToggle />
