@@ -9,7 +9,7 @@ export default async function Tables() {
 
   return (
     <BookingsProvider initialBookings={bookings}>
-      <TablesList />
+      <TablesList tables={tables} />
     </BookingsProvider>
   );
 }
