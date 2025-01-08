@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { CalendarIcon, Clock, Users, UtensilsCrossed } from 'lucide-react'
-import { addDays, format, isSameDay, setHours, setMinutes } from "date-fns"
-import { toast } from "sonner"
+import { useState } from "react";
+import { CalendarIcon, Clock, Users, UtensilsCrossed } from 'lucide-react';
+import { addDays, format, isSameDay, setHours, setMinutes } from "date-fns";
+import { toast } from "sonner";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
@@ -15,101 +15,105 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 interface TimeSlot {
-  time: string
-  available: boolean
+  time: string;
+  available: boolean;
 }
 
 export default function BookingCard() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [date, setDate] = useState<Date>()
-  const [time, setTime] = useState<string>()
-  const [partySize, setPartySize] = useState("2")
-  const [specialRequests, setSpecialRequests] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState<string>();
+  const [partySize, setPartySize] = useState("2");
+  const [specialRequests, setSpecialRequests] = useState("");
+
+  const handleBooking = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/post-bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          booking_date: date,
+          contact_info: 'marcomendesdev@gmail.com',
+          customer_name: 'Marco Mendes',
+          status: 'Updated',
+          table_id: 'T001',
+          special_requests: specialRequests,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create booking');
+      }
+
+      const booking = await response.json();
+      console.log('Booking created:', booking);
+      toast.success('Booking created successfully!');
+    } catch (error) {
+      console.error('Error creating booking:', error);
+      toast.error('Failed to create booking');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Generate time slots based on the selected date
   const getTimeSlots = (selectedDate: Date | undefined): TimeSlot[] => {
-    const slots: TimeSlot[] = []
-    const now = new Date()
-    const isToday = selectedDate && isSameDay(selectedDate, now)
+    const slots: TimeSlot[] = [];
+    const now = new Date();
+    const isToday = selectedDate && isSameDay(selectedDate, now);
 
     for (let hour = 17; hour <= 21; hour++) {
       for (const minute of [0, 30]) {
-        const slotTime = setMinutes(setHours(new Date(), hour), minute)
-        const timeString = format(slotTime, "HH:mm")
-        
+        const slotTime = setMinutes(setHours(new Date(), hour), minute);
+        const timeString = format(slotTime, "HH:mm");
+
         // If it's today, disable past times
-        const isPastTime = isToday && slotTime <= now
-        
+        const isPastTime = isToday && slotTime <= now;
+
         // Simulate some slots being unavailable
-        const randomAvailability = Math.random() > 0.3
+        const randomAvailability = Math.random() > 0.3;
 
         slots.push({
           time: timeString,
           available: !isPastTime && randomAvailability,
-        })
+        });
       }
     }
-    return slots
-  }
+    return slots;
+  };
 
-  const timeSlots = getTimeSlots(date)
+  const timeSlots = getTimeSlots(date);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-
-    // Show loading toast
-    const loadingToast = toast.loading('Processing your reservation...')
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      // Dismiss loading toast and show success
-      toast.dismiss(loadingToast)
-      toast.success('Reservation Confirmed! 🎉', {
-        description: `Your table for ${partySize} has been reserved for ${date?.toLocaleDateString()} at ${time}.`,
-        duration: 5000,
-      })
-
-      // Reset form
-      setDate(undefined)
-      setTime(undefined)
-      setPartySize("2")
-      setSpecialRequests("")
-    } catch (error) {
-      // Dismiss loading toast and show error
-      toast.dismiss(loadingToast)
-      toast.error(`Booking Failed: ${error}`, {
-        description: 'Something went wrong. Please try again.',
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
+    e.preventDefault();
+    await handleBooking();
+  };
 
   return (
     <TooltipProvider>
@@ -182,8 +186,7 @@ export default function BookingCard() {
                             className={cn(
                               "cursor-pointer",
                               !available && "opacity-50"
-                            )}
-                          >
+                            )}>
                             {time}
                           </SelectItem>
                         </div>
@@ -213,9 +216,9 @@ export default function BookingCard() {
                   type="number"
                   value={partySize}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value)
+                    const value = parseInt(e.target.value);
                     if (value >= 1 && value <= 12) {
-                      setPartySize(e.target.value)
+                      setPartySize(e.target.value);
                     }
                   }}
                   min="1"
@@ -262,6 +265,5 @@ export default function BookingCard() {
         </form>
       </Card>
     </TooltipProvider>
-  )
+  );
 }
-

@@ -1,10 +1,9 @@
-import BookingCard from "@/components/booking-card";
-
 export default async function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <BookingCard />
+    <div className="min-h-screen w-full flex items-center justify-center font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col items-center justify-center sm:mt-[-10rem] p-8 mt-[-25rem]">
+        <h1 className="text-4xl">Book a table in the best restaurant in town!</h1>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos, a.</p>
       </main>
     </div>
   );

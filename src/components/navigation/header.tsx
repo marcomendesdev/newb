@@ -69,8 +69,12 @@ export default function Header() {
                 Contact
               </Link>
               <div className="flex w-full items-center py-2 gap-4 text-lg font-semibold lg:hidden">
-                <Button variant="outline" className="w-full">Sign in</Button>
-                <Button className="w-full">Sign Up</Button>
+                <Button variant="outline" className="w-full">
+                  Sign in
+                </Button>
+                <Link href={"/book-table"} prefetch={false}>
+                  <Button className="w-full">Book a table</Button>
+                </Link>
               </div>
             </div>
           </SheetContent>
@@ -129,7 +133,9 @@ export default function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto lg:flex gap-2 hidden">
-          <Button>Book a table</Button>
+          <Link href={"/book-table"} prefetch={false}>
+            <Button>Book a table</Button>
+          </Link>
           <Button variant="outline">Sign In</Button>
         </div>
         <div className="ml-auto lg:ml-4 gap-2">
