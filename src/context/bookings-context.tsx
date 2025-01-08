@@ -6,6 +6,7 @@ interface TableType {
   id: number;
   name: string;
   capacity: number;
+  location: string;
 }
 
 interface BookingsContextType {

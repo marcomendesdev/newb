@@ -41,28 +41,28 @@ export default function Header() {
                 Home
               </Link>
               <Link
-                href="#"
+                href="/about"
                 className="flex w-full items-center py-2 text-lg font-semibold"
                 prefetch={false}
               >
                 About
               </Link>
               <Link
-                href="/about"
+                href="/tables"
                 className="flex w-full items-center py-2 text-lg font-semibold"
                 prefetch={false}
               >
-                Services
+                Tables
               </Link>
               <Link
-                href="/portfolio"
+                href="/my-bookings"
                 className="flex w-full items-center py-2 text-lg font-semibold"
                 prefetch={false}
               >
-                Portfolio
+                My Bookings
               </Link>
               <Link
-                href="#"
+                href="/contact"
                 className="flex w-full items-center py-2 text-lg font-semibold"
                 prefetch={false}
               >
@@ -101,25 +101,25 @@ export default function Header() {
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
-                href="#"
+                href="/tables"
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 prefetch={false}
               >
-                Services
+                Tables
               </Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
-                href="/portfolio"
+                href="/my-bookings"
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 prefetch={false}
               >
-                Portfolio
+                My Bookings
               </Link>
             </NavigationMenuLink>
             <NavigationMenuLink asChild>
               <Link
-                href="#"
+                href="/contact"
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
                 prefetch={false}
               >
@@ -129,8 +129,8 @@ export default function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto lg:flex gap-2 hidden">
-          <Button variant="outline">Sign in</Button>
-          <Button>Sign Up</Button>
+          <Button>Book a table</Button>
+          <Button variant="outline">Sign In</Button>
         </div>
         <div className="ml-auto lg:ml-4 gap-2">
           <ModeToggle />

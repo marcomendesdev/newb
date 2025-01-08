@@ -1,21 +1,26 @@
 "use client";
 
 import { useBookings } from "@/context/bookings-context";
+import TableCard from "./table-card";
 
 export default function TablesList() {
-  const {bookings} = useBookings();
+  const { bookings } = useBookings();
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1 className="text-4xl font-bold">Tables</h1>
-        <>
+    <div className="font-[family-name:var(--font-geist-sans)]">
+      <main className="container mx-auto p-4">
+        <h1 className="text-4xl font-bold py-12">Tables</h1>
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {bookings &&
             bookings.map((booking) => (
-              <div key={booking.id}>
-                <h1>{booking.capacity}</h1>
-              </div>
+              <TableCard
+                key={booking.id}
+                name={booking.name}
+                capacity={booking.capacity}
+                location={booking.location}
+                onBook={() => alert("Booking table...")}
+              />
             ))}
-        </>
+        </div>
       </main>
     </div>
   );
