@@ -6,6 +6,7 @@ import { useAuth, useUser } from "@clerk/nextjs";
 export default function CreateUserOnLogin() {
   const { isSignedIn } = useAuth();
   const { user } = useUser();
+  
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -17,6 +18,7 @@ export default function CreateUserOnLogin() {
         body: JSON.stringify({
           id: user.id,
           email: user.primaryEmailAddress?.emailAddress,
+          name: user.fullName,
         }),
       })
         .then((res) => res.json())
