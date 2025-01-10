@@ -33,3 +33,15 @@ export async function fetchBookings() {
   }
 }
 
+export async function fetchBookingsByUser(userId: string) {
+  const client = await pool.connect();
+  try {
+    const { rows } = await client.query('SELECT * FROM "restaurant-tables".bookings WHERE user_id = $1', [userId]);
+    return rows;
+  } catch (error) {
+    console.error("Error fetching bookings by user", error);
+    throw new Error("Failed to fetch bookings by user");
+  } finally {
+    client.release();
+  }
+}

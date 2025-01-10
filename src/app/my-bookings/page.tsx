@@ -1,4 +1,12 @@
-export default function MyBookings() {
+import { fetchBookingsByUser } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs/server";
+
+export default async function MyBookings() {
+  const user = await currentUser();
+
+  const booking = await fetchBookingsByUser(user.id);
+  console.log("Booking", booking);
+
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <main className="container mx-auto p-4">
