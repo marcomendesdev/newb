@@ -6,6 +6,7 @@ import Header from "@/components/navigation/header";
 import Footer from "@/components/navigation/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import CreateUserOnLogin from "@/components/users/create-user";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
+          <CreateUserOnLogin />
           {children}
           <Footer />
           <Toaster />
