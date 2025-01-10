@@ -10,7 +10,7 @@ export default function BookTable({params}: {params: {id: string}}) {
       <main className="container mx-auto p-4">
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 py-12">
           <BookingsProvider initialBookings={[]}>
-            <BookingCard  />
+            <BookingCard id={id}  />
             <pre>{id}</pre>
           </BookingsProvider>
         </div>

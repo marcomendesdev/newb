@@ -42,7 +42,7 @@ interface TimeSlot {
   available: boolean;
 }
 
-export default function BookingCard() {
+export default function BookingCard({id}: {id: string}) {
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
@@ -62,7 +62,7 @@ export default function BookingCard() {
           contact_info: 'marcomendesdev@gmail.com',
           customer_name: 'Marco Mendes',
           status: 'Updated',
-          table_id: 'T001',
+          table_id: id,
           special_requests: specialRequests,
         }),
       });
