@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CalendarIcon, Clock, Users, UtensilsCrossed } from 'lucide-react';
 import { addDays, format, isSameDay, setHours, setMinutes } from "date-fns";
 import { toast } from "sonner";
+import { useUser } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,8 @@ interface TimeSlot {
   available: boolean;
 }
 
-export default function BookingCard({id}: {id: string}) {
+export default function BookingCard({ id }: { id: string }) {
+  const { user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>();
@@ -50,6 +52,11 @@ export default function BookingCard({id}: {id: string}) {
   const [specialRequests, setSpecialRequests] = useState("");
 
   const handleBooking = async () => {
+    if (!user) {
+      toast.error('You must be logged in to make a booking');
+      return;
+    }
+
     setIsLoading(true);
     try {
       const response = await fetch('/api/post-bookings', {
@@ -59,11 +66,11 @@ export default function BookingCard({id}: {id: string}) {
         },
         body: JSON.stringify({
           id: Math.random().toString(36).substr(2, 9),
-          user_id: '123',
+          user_id: user.id,
           table_id: id,
           date: date?.toISOString(),
           special_requests: specialRequests,
-          username: 'John Doe',
+          username: user.fullName,
           guests: parseInt(partySize, 10),
         }),
       });
