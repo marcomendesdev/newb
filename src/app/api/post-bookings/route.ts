@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
   const client = await pool.connect();
   try {
     const query = `
-      INSERT INTO "restaurant-tables".bookings (id, user-id, table_id, date, special_requests, created_at, updated_at, username)
-      VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), $6)
+      INSERT INTO "restaurant-tables".bookings (user-id, table_id, date, special_requests, created_at, updated_at, username)
+      VALUES ($1, $2, $3, $4, NOW(), NOW(), $5)
       RETURNING *;
     `;
     const values = [new Date(booking_date), contact_info, customer_name, status, table_id, special_requests];
