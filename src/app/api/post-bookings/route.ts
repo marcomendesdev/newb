@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   try {
     const query = `
       INSERT INTO "restaurant-tables".bookings (id, user-id, table_id, date, special_requests, created_at, updated_at, username)
-      VALUES ($1, $2, $3, NOW(), $4, NOW(), NOW(), $5)
+      VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), $6)
       RETURNING *;
     `;
     const values = [new Date(booking_date), contact_info, customer_name, status, table_id, special_requests];
