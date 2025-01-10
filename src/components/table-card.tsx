@@ -7,19 +7,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Users2, MapPin, NotepadText } from "lucide-react";
+import Link from "next/link";
 
 interface TableCardProps {
+  id: string;
   name: string;
   capacity: number;
   location: string;
-  onBook?: () => void;
 }
 
 export default function TableCard({
+  id = "1",
   name = "Table 12",
   capacity = 4,
   location = "Main Dining Area",
-  onBook,
+  
 }: TableCardProps) {
   return (
     <Card className="w-full max-w-sm">
@@ -44,9 +46,11 @@ export default function TableCard({
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={onBook}>
+        <Link href={`/tables/${id}`} >
+        <Button className="w-full" >
           Book this table
         </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

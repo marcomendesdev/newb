@@ -19,7 +19,7 @@ export default function TablesList({ tables }: TablesListProps) {
                 name={table.name}
                 capacity={table.capacity}
                 location={table.location}
-                onBook={() => alert("Booking table...")}
+                id={table.id}
               />
             ))}
         </div>
