@@ -58,12 +58,13 @@ export default function BookingCard({id}: {id: string}) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          booking_date: date,
-          contact_info: 'marcomendesdev@gmail.com',
-          customer_name: 'Marco Mendes',
-          status: 'Updated',
+          id: Math.random().toString(36).substr(2, 9),
+          user_id: '123',
           table_id: id,
+          date: date?.toISOString(),
           special_requests: specialRequests,
+          username: 'John Doe',
+          guests: parseInt(partySize, 10),
         }),
       });
 

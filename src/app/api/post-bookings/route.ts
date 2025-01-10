@@ -11,16 +11,16 @@ const pool = new Pool({
 });
 
 export async function POST(req: NextRequest) {
-  const { booking_date, contact_info, customer_name, status, table_id, special_requests } = await req.json();
+  const { id, user_id, table_id, date, special_requests, username, guests } = await req.json();
 
   const client = await pool.connect();
   try {
     const query = `
-      INSERT INTO "restaurant-tables".bookings (user-id, table_id, date, special_requests, created_at, updated_at, username)
-      VALUES ($1, $2, $3, $4, NOW(), NOW(), $5)
+      INSERT INTO "restaurant-tables".bookings (id, user_id, table_id, date, special_requests, created_at, updated_at, username, guests)
+      VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), $6, $7)
       RETURNING *;
     `;
-    const values = [new Date(booking_date), contact_info, customer_name, status, table_id, special_requests];
+    const values = [id, user_id, table_id, date, special_requests, username, guests];
     const { rows } = await client.query(query, values);
     return NextResponse.json(rows[0], { status: 201 });
   } catch (error) {
