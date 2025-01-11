@@ -7,7 +7,7 @@ type PageProps = {
   };
 };
 
-export default async function BookTable({ params }: PageProps) {
+export default function BookTable({ params }: PageProps) {
   const { id } = params;
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
