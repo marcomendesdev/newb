@@ -2,7 +2,7 @@ import BookingCard from "@/components/booking-card";
 import { BookingsProvider } from "@/context/bookings-context";
 
 
-export default function BookTable({params}: {params: {id: string}}) {
+export default async function BookTable({params}: {params: {id: string}}) {
     const { id } = params;
     
   return (
