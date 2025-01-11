@@ -4,6 +4,10 @@ import { currentUser } from "@clerk/nextjs/server";
 export default async function MyBookings() {
   const user = await currentUser();
 
+  if (!user) {
+    return <div>User not found</div>;
+  }
+
   const booking = await fetchBookingsByUser(user.id);
   console.log("Booking", booking);
 
