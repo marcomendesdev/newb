@@ -1,9 +1,21 @@
 import BookingCard from "@/components/booking-card";
 import { BookingsProvider } from "@/context/bookings-context";
+// import type { Metadata } from 'next'
+ 
+type Props = {
+  params: Promise<{ id: string }>
+  
+}
 
-export type paramsType = Promise<{ id: string }>;
-export default async function BookTable(props: { params: paramsType }) {
-  const { id } = await props.params;
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const id = (await params).id;
+//   return {
+//     title: `Booking for ${id}`,
+//   };
+// }
+
+export default async function BookTable({ params }: Props) {
+  const id = (await params).id;
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <main className="container mx-auto p-4">
