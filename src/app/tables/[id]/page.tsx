@@ -1,8 +1,11 @@
 import BookingCard from "@/components/booking-card";
 import { BookingsProvider } from "@/context/bookings-context";
 
-export default async function BookTable({ params }: {params: {id: string}}) {
-  const {id} = await params; 
+type Params = Promise<{ id: string }>
+
+export default async function BookTable(props: { params: Params }) {
+  const params = await props.params;
+  const id = params.id; 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <main className="container mx-auto p-4">
