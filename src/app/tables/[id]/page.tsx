@@ -7,9 +7,8 @@ type PageProps = {
   };
 };
 
-export default async function BookTable(props: { params: Params }) {
-  const params = await props.params;
-  const id = params.id; 
+export default function BookTable({ params }: PageProps) {
+  const { id } = params;
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <main className="container mx-auto p-4">
