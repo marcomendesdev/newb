@@ -9,7 +9,6 @@ export default async function BookTable({ params }: { params: { id: string } }) 
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 py-12">
           <BookingsProvider initialBookings={[]}>
             <BookingCard id={id} />
-            <pre>{id}</pre>
           </BookingsProvider>
         </div>
       </main>
