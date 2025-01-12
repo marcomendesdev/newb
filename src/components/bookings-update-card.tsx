@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { CalendarIcon, Users } from 'lucide-react'
-import { format } from "date-fns"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { useState } from "react";
+import { CalendarIcon, Users } from 'lucide-react';
+import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -20,35 +20,51 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
-// This would come from your database
-const defaultBooking = {
-  date: new Date(),
-  time: "14:00",
-  guests: 2,
-  notes: "No allergies"
+interface Booking {
+  table_id: string;
+  username: string;
+  date: string | Date;
+  id: string;
+  guests: number;
+  special_requests: string;
 }
 
-export default function BookingForm() {
-  const [open, setOpen] = useState(false)
-  
-  const form = useForm({
-    defaultValues: defaultBooking
-  })
+interface BookingUpdateCardProps {
+  booking: Booking;
+  handleUpdate: (updatedBooking: Booking) => void;
+}
 
-  async function onSubmit(data: typeof defaultBooking) {
-    // Handle the form submission here
-    console.log(data)
-    setOpen(false)
+export default function BookingUpdateCard({ booking, handleUpdate }: BookingUpdateCardProps) {
+  const [open, setOpen] = useState(false);
+
+  const form = useForm({
+    defaultValues: {
+      date: new Date(booking.date),
+      time: format(new Date(booking.date), "HH:mm"),
+      guests: booking.guests,
+      notes: booking.special_requests,
+    },
+  });
+
+  async function onSubmit(data: ReturnType<typeof form.getValues>) {
+    const updatedBooking = {
+      ...booking,
+      date: new Date(`${data.date.toISOString().split('T')[0]}T${data.time}`),
+      guests: data.guests,
+      special_requests: data.notes,
+    };
+    handleUpdate(updatedBooking);
+    setOpen(false);
   }
 
   return (
@@ -169,6 +185,5 @@ export default function BookingForm() {
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-

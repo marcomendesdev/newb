@@ -1,5 +1,6 @@
 "use client";
 
+import BookingUpdateCard from "./bookings-update-card";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -51,59 +52,24 @@ export default function MyBookingsCard({ bookings }: MyBookingsCardProps) {
     }
   };
 
-  const handleUpdate = async (id: string) => {
-    const booking = currentBookings.find((booking) => booking.id === id);
-    if (!booking) {
-      toast.error("Booking not found");
-      return;
-    }
-
-    const updatedDate = prompt("Enter the new date", booking.date);
-    if (!updatedDate) {
-      return;
-    }
-
-    const updatedSpecialRequests = prompt(
-      "Enter the new special requests",
-      booking.special_requests
-    );
-    if (updatedSpecialRequests === null) {
-      return;
-    }
-
-    const updatedUsername = prompt("Enter the new username", booking.username);
-    if (updatedUsername === null) {
-      return;
-    }
-
-    const updatedGuests = prompt("Enter the new number of guests", booking.guests);
-    if (updatedGuests === null) {
-      return;
-    }
-
+  const handleUpdate = async (updatedBooking: Booking) => {
     try {
       const response = await fetch("/api/update-bookings", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id,
-          date: updatedDate,
-          special_requests: updatedSpecialRequests,
-          username: updatedUsername,
-          guests: updatedGuests,
-        }),
+        body: JSON.stringify(updatedBooking),
       });
 
       if (!response.ok) {
         throw new Error("Failed to update booking");
       }
 
-      const updatedBooking = await response.json();
+      const updatedBookingFromServer = await response.json();
       setCurrentBookings(
         currentBookings.map((booking) =>
-          booking.id === id ? updatedBooking : booking
+          booking.id === updatedBooking.id ? updatedBookingFromServer : booking
         )
       );
       toast.success("Booking updated successfully");
@@ -138,9 +104,10 @@ export default function MyBookingsCard({ bookings }: MyBookingsCardProps) {
               <Button onClick={() => handleDelete(booking.id)}>
                 Delete this booking
               </Button>
-              <Button onClick={() => handleUpdate(booking.id)}>
-                Update this booking
-              </Button>
+              <BookingUpdateCard
+                booking={booking}
+                handleUpdate={handleUpdate}
+              />
             </CardFooter>
           </Card>
         ))}
