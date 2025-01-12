@@ -81,11 +81,6 @@ export default function MyBookingsCard({ bookings }: MyBookingsCardProps) {
       return;
     }
 
-    const updatedTableId = prompt("Enter the new table ID", booking.table_id);
-    if (updatedTableId === null) {
-      return;
-    }
-
     try {
       const response = await fetch("/api/update-bookings", {
         method: "PUT",
@@ -98,7 +93,6 @@ export default function MyBookingsCard({ bookings }: MyBookingsCardProps) {
           special_requests: updatedSpecialRequests,
           username: updatedUsername,
           guests: updatedGuests,
-          table_id: updatedTableId,
         }),
       });
 
