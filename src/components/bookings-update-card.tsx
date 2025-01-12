@@ -56,7 +56,7 @@ export default function BookingUpdateCard({ booking, handleUpdate }: BookingUpda
     },
   });
 
-  async function onSubmit(data: ReturnType<typeof form.getValues>) {
+  async function onSubmit(data: { date: Date; time: string; guests: number; notes: string }) {
     const updatedBooking = {
       ...booking,
       date: new Date(`${data.date.toISOString().split('T')[0]}T${data.time}`),
