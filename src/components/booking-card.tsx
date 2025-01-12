@@ -59,6 +59,12 @@ export default function BookingCard({ id }: { id: string }) {
 
     setIsLoading(true);
     try {
+      const bookingDate = date ? new Date(date) : undefined;
+      if (bookingDate && time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        bookingDate.setHours(hours, minutes);
+      }
+
       const response = await fetch('/api/post-bookings', {
         method: 'POST',
         headers: {
@@ -68,7 +74,7 @@ export default function BookingCard({ id }: { id: string }) {
           id: Math.random().toString(36).substr(2, 9),
           user_id: user.id,
           table_id: id,
-          date: date?.toISOString(),
+          date: bookingDate?.toISOString(),
           special_requests: specialRequests,
           username: user.fullName,
           guests: parseInt(partySize, 10),
