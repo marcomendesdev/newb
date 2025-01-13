@@ -37,6 +37,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useRouter } from "next/navigation";
 
 interface TimeSlot {
   time: string;
@@ -50,6 +51,7 @@ export default function BookingCard({ id }: { id: string }) {
   const [time, setTime] = useState<string>();
   const [partySize, setPartySize] = useState("2");
   const [specialRequests, setSpecialRequests] = useState("");
+  const useRoute = useRouter();
 
   const handleBooking = async () => {
     if (!user) {
@@ -127,6 +129,7 @@ export default function BookingCard({ id }: { id: string }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleBooking();
+    useRoute.push('/my-bookings');
   };
 
   return (
